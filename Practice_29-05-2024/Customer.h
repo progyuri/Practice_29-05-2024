@@ -33,6 +33,7 @@ enum DiscountType {
 
 class Customer
 {
+private: int ñustomerId;
 public:
 	struct Basket {	
 		Product* product;
@@ -44,7 +45,7 @@ public:
 	*tail, 
 	*ptr;
 	
-	static int ñustomerId;
+	static int count;
 	string name;
 	string surname;
 	string email;
@@ -71,7 +72,8 @@ public:
 		head = nullptr;
 		tail = nullptr;
 		ptr = nullptr;
-		ñustomerId++;
+		count++;
+		ñustomerId=count;
 		Basket* ptr_basket = new Basket;
 		ptr_basket->quantity = 0;
 		ptr_basket->next = nullptr;
@@ -122,6 +124,7 @@ public:
 	
 	
 	// Ãåòòåğû
+	int getCustomerId() { return ñustomerId;}
 	string getName() const {return name;}
 	string getSurname() const { return surname; }
 	string getEmail() const {return email;}
@@ -231,7 +234,7 @@ public:
 };
 
 // Óñòàíàâëèâàåì çíà÷åíèå ñ÷åò÷èêó = 0
-int Customer::ñustomerId = 0;
+int Customer::count = 0;
 
 Customer::~Customer() {
 	Basket* current = head;
@@ -352,7 +355,7 @@ bool Customer::Byu() {
 
 void Customer::displayCustomer() {
 	cout << "Display Customer : "<< endl;
-	std::cout << "Customer ID: " << ñustomerId << endl;
+	cout << "Customer ID: " << ñustomerId << endl;
 	cout << "Name: " << name << endl;
 	cout << "Surname: " << surname << endl;
 	cout << "Email: " << email << endl;
