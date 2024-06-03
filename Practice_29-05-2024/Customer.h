@@ -6,21 +6,21 @@ using namespace std;
 
 
 struct Product {
-	static int id;
+	//static int id;
 	string name="";
 	float price=0;
 	Product() {
-		id++;
+	//	id++;
 	}
 	Product(string name, float price) : name{ name }, price{ price } {
-		id++;
+	//	id++;
 	}
 	Product(int id_product) {
 		//находим продукт по id
-		id++;
+	//	id++;
 	}
 };
-int id = 0;
+//int id = 0;
 
 
 // скидка от 0% до 100%
@@ -53,13 +53,13 @@ public:
 	*tail, 
 	*ptr;
 	
-	static int count;
+	//static int count;
 	string name;
 	string surname;
 	string email;
 	string phone;
 	DiscountType discount;
-	float money; //кол-во денег
+	float balance; //кол-во денег
 	
 	float all_price_order = 0; // сумма заказов покупателя (нужно для расчета скидки)
 	
@@ -73,15 +73,15 @@ public:
 		surname{ surname },
 		email{ email },
 		phone{ phone },
-		money (money)
+		balance (money)
 		{
 		discount = No_diskont;
 		all_price_order = 0;
 		head = nullptr;
 		tail = nullptr;
 		ptr = nullptr;
-		count++;
-		сustomerId=count;
+		//count++;
+		//сustomerId=count;
 		Basket* ptr_basket = new Basket;
 		ptr_basket->quantity = 0;
 		ptr_basket->next = nullptr;
@@ -96,14 +96,12 @@ public:
 		email{ other.email },
 		phone{ other.phone },
 		discount{ other.discount},
-		money{ other.money},
-		all_price_order{ other.all_price_order},
-		head{ other.head },
-		tail{ other.tail },
-		ptr{ other.ptr }
+		balance{ other.balance},
+		all_price_order{ other.all_price_order}
 
 	{
-		сustomerId++;
+		//count++;
+		//сustomerId = count;
 	}
 
 	//Конструктор переноса
@@ -217,7 +215,7 @@ public:
 	/// Вычисление общей суммы заказа
 	/// </summary>
 	/// <returns></returns>
-	float AllBasket_Price();
+	float AllBasket_Price(float& total_dis);
 
 	/// <summary>
 	/// Определение скидки для покупателя
@@ -242,6 +240,6 @@ public:
 };
 
 // Устанавливаем значение счетчику = 0
-int Customer::count = 0;
+//int Customer::count = 0;
 
 
