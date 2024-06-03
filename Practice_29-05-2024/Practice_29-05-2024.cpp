@@ -10,9 +10,12 @@ using namespace std;
 int main()
 {
 	
-	//Customer C1("John", "Doe","johndoe@example.com", "79115443121",100000);
-	//C1.displayCustomer();
+	
+
+	Customer C1("John", "Doe","johndoe@example.com", "79115443121",100000);
+	C1.displayCustomer();
 	
 
 }
+
 

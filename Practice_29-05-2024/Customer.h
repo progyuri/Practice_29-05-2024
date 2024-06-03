@@ -7,12 +7,20 @@ using namespace std;
 
 struct Product {
 	static int id;
-	string name;
-	float price;
+	string name="";
+	float price=0;
+	Product() {
+		id++;
+	}
 	Product(string name, float price) : name{ name }, price{ price } {
 		id++;
 	}
+	Product(int id_product) {
+		//находим продукт по id
+		id++;
+	}
 };
+int id = 0;
 
 
 // скидка от 0% до 100%
@@ -141,7 +149,7 @@ public:
 	/// Получение id покупателя по имени
 	/// </summary>
 	/// <returns></returns>
-	int getCustomerId(string name);
+	//int getCustomerId(string name);
 	
 
 	/// <summary>
@@ -154,7 +162,7 @@ public:
 	/// <summary>
 	/// Инициализация позиции корзины наименованием товара и количетвом
 	/// </summary>
-	Basket* initBasket(string p_name, int p_quantity);
+	Basket* initBasket(string p_name, int p_quantity, float p_price);
 
 	/// <summary>
 	/// Отображение позииции в корзине
@@ -214,7 +222,7 @@ public:
 	/// <summary>
 	/// Определение скидки для покупателя
 	/// </summary>
-	double Discount(int сustomerID);
+	double CalculateDiscount(string name);
 
 	
 	/// <summary>
@@ -236,130 +244,4 @@ public:
 // Устанавливаем значение счетчику = 0
 int Customer::count = 0;
 
-Customer::~Customer() {
-	Basket* current = head;
-	Basket* temp = nullptr;
 
-	while (current != nullptr) {
-		temp = current;
-		current = current->next;
-		delete temp;
-	}
-}
-
-void Customer::AddToBasket(Basket* newBasket) {
-	if (head == nullptr) {
-		head = tail = newBasket;
-		head->next = nullptr;
-	}
-	else {
-		tail->next = newBasket;
-		newBasket->next = nullptr;
-		tail = newBasket;
-	}
-}
-
-Customer::Basket* Customer::initBasket(string p_name, int p_quantity) {
-	Basket* ptr = new Basket;
-
-	ptr ->product->name = p_name;
-	ptr->quantity = p_quantity;
-	ptr->totalprice = ptr->product->price * p_quantity;
-	return ptr;
-}
-
-// Подсчет суммы всего заказа
-float Customer::AllBasket_Price() {
-	float total = 0;
-	Basket* temp = head;
-
-	while (temp != nullptr) {
-		total += temp->product->price * temp->quantity; // без учета скидки
-		total += temp->product->price * temp->quantity * (this->discount / 100); // с учетом скидки;
-		temp = temp->next;
-	}
-
-	return total;
-}
-
-// Удаление позиции из корзины
-void Customer::deleteBusket(Basket* delNode) {
-	if (head == nullptr) return;
-	Basket* temp, *prev;
-
-	temp = delNode;
-	prev = head;
-
-	if (temp == prev) {
-		head = head->next;
-		if (tail == temp) {
-			tail = tail->next;
-		}
-		delete temp;
-	}
-	else {
-		while (prev->next != temp) {
-			prev = prev->next;
-		}
-		prev->next = temp->next;
-		if (tail == temp) {
-			tail = prev;
-		}
-		delete temp;
-	}
-
-}
-
-//Отображение позиции в корзине
-void Customer::displayBasketNode(Basket* dispNode) {
-	if (dispNode != nullptr)
-		cout << dispNode->product->name << " " << dispNode->quantity << " " << dispNode->totalprice << endl;
-}
-
-//Отображение всех позиций в корзине
-void Customer::displayBasket() {
-	Basket* temp = head;
-	while (temp != nullptr) {
-		displayBasketNode(temp);
-		temp = temp->next;
-	}
-}
-
-Customer::Basket* Customer::searchBasketName(string p_name) {
-	Basket* temp = head;
-	while (temp->product->name != p_name) {
-		temp = temp->next;
-		if (temp == nullptr) break;
-	}
-	return temp;
-}
-
-bool Customer::Byu() {
-	Basket* obj = head;
-	if (head == nullptr) return 0;
-	else {
-		while (obj->next != nullptr) {
-			// передаем выбранные продукты продавцу
-			/*
-			obj->product->name;
-			obj->quantity
-			*/
-
-			obj = obj->next;
-		}
-		// если подтверждено то уменьшаем кол-во денег у покупателя на сумму заказа
-		
-	}
-	return 1;
-}
-
-void Customer::displayCustomer() {
-	cout << "Display Customer : "<< endl;
-	cout << "Customer ID: " << сustomerId << endl;
-	cout << "Name: " << name << endl;
-	cout << "Surname: " << surname << endl;
-	cout << "Email: " << email << endl;
-	cout << "Phone: " << phone << endl;
-	cout << "Money: " << money << endl;
-	cout << "Discount: " << discount << "%" << endl;
-}
