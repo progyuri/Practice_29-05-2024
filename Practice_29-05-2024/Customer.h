@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
-//#include "\\Teacher\общая папка\БВ311\Tovar.h"
+#include "\\Teacher\общая папка\БВ311\Tovar.h"
 
 using namespace std;
 
-
+/*
 struct Product {
 	static int id;
 	string name;
@@ -13,13 +13,26 @@ struct Product {
 		id++;
 	}
 };
+*/
 
+// скидка от 0% до 100%
+	// если общая сумма заказов до 1000 ---> скидка 2%
+	// если общая сумма заказов от 1000 до 5000 то скидка 5%
+	// если общая сумма заказов от 5000 до 10000 то скидка 10%
+	// если общая сумма заказов от 10000 скидка 20%
+enum DiscountType {
+	No_diskont,
+	Сustomer1000 = 2,
+	Сustomer5000 = 5,
+	Сustomer10000 = 10,
+	VIP_CUSTOMER = 20
+};
 
 class Customer
 {
 public:
-	struct Basket {
-		Product product(string p_name, float p_price);
+	struct Basket {	
+		Product* product;
 		unsigned int quantity;
 		float totalprice;
 		Basket* next;
@@ -33,24 +46,30 @@ public:
 	string surname;
 	string email;
 	string phone;
-	float discount;
-	float price_order = 0; // сумма заказов покупателя (нужно для расчета скидки)
-
+	DiscountType discount;
+	float money; //кол-во денег
+	
+	float all_price_order = 0; // сумма заказов покупателя (нужно для расчета скидки)
+	
+	
 	
 	
 	
 	// Конструктор 
-	Customer(string name, string surname, string email, string phone) :
+	Customer(string name, string surname, string email, string phone, float money) :
 		name{ name },
 		surname{ surname },
 		email{ email },
 		phone{ phone },
-		discount{ 0 },
-		head{ nullptr }, 
-		tail{ nullptr }, 
-		ptr{ nullptr } {
+		money (money)
+		{
+		discount = No_diskont;
+		all_price_order = 0;
+		head = nullptr;
+		tail = nullptr;
+		ptr = nullptr;
 		сustomerId++;
-	}
+		}
 
 	// Конструктор копирования
 	Customer(const Customer& other): 
@@ -58,10 +77,11 @@ public:
 		surname{ other.surname },
 		email{ other.email },
 		phone{ other.phone },
-		discount{ other.discount}
+		discount{ other.discount},
+		money{ other.money},
+		all_price_order{ other.all_price_order }
 	{
 		сustomerId++;
-		//вставить метод insert для актуализации head,tail
 	}
 
 	//Конструктор переноса
@@ -195,7 +215,13 @@ public:
 	/// <param name="id_product"></param>
 	/// <param name=""></param>
 	/// <returns></returns>
-	bool Byu(Basket* basket_obj);
+	bool Byu();
+
+	/// <summary>
+	/// Отображение покупателя
+	/// </summary>
+	void displayCustomer();
+
 };
 
 Customer::~Customer() {
@@ -224,19 +250,20 @@ void Customer::AddToBasket(Basket* newBasket) {
 Customer::Basket* Customer::initBasket(string p_name, int p_quantity) {
 	Basket* ptr = new Basket;
 
-	ptr ->product.name = p_name;
+	ptr ->product->name = p_name;
 	ptr->quantity = p_quantity;
-	ptr->totalprice= ptr->product.price*p_quantity
+	ptr->totalprice = ptr->product->price * p_quantity * ;
 	return ptr;
 }
 
 // Подсчет суммы всего заказа
 float Customer::AllBasket_Price() {
-	float total = 0.0f;
+	float total = 0;
 	Basket* temp = head;
 
 	while (temp != nullptr) {
-		total += temp->product.price * temp->quantity;
+		total += temp->product->price * temp->quantity; // без учета скидки
+		total += temp->product->price * temp->quantity * (this->discount / 100); // с учетом скидки;
 		temp = temp->next;
 	}
 
@@ -274,7 +301,7 @@ void Customer::deleteBusket(Basket* delNode) {
 //Отображение позиции в корзине
 void Customer::displayBasketNode(Basket* dispNode) {
 	if (dispNode != nullptr)
-		cout << dispNode->product.name << " " << dispNode->product.quantity << " " << dispNode->totalprice << endl;
+		cout << dispNode->product->name << " " << dispNode->quantity << " " << dispNode->totalprice << endl;
 }
 
 //Отображение всех позиций в корзине
@@ -288,9 +315,37 @@ void Customer::displayBasket() {
 
 Customer::Basket* Customer::searchBasketName(string p_name) {
 	Basket* temp = head;
-	while (temp->product.name != p_name) {
+	while (temp->product->name != p_name) {
 		temp = temp->next;
 		if (temp == nullptr) break;
 	}
 	return temp;
+}
+
+bool Customer::Byu() {
+	Basket* obj = head;
+	if (head == nullptr) return 0;
+	else {
+		while (obj->next != nullptr) {
+			// передаем выбранные продукты продавцу
+			/*
+			obj->product->name;
+			obj->quantity
+			*/
+
+			obj = obj->next;
+		}
+		// если подтверждено то уменьшаем кол-во денег у покупателя на сумму заказа
+	}
+}
+
+void Customer::displayCustomer() {
+	cout << "Display Customer : "<< endl;
+	std::cout << "Customer ID: " << сustomerId << endl;
+	cout << "Name: " << name << endl;
+	cout << "Surname: " << surname << endl;
+	cout << "Email: " << email << endl;
+	cout << "Phone: " << phone << endl;
+	cout << "Money: " << money << endl;
+	cout << "Discount: " << discount << "%" << endl;
 }
