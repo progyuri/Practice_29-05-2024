@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
-#include "\\Teacher\общая папка\БВ311\Tovar.h"
+//#include "\\Teacher\общая папка\БВ311\Tovar.h"
 
 using namespace std;
 
-/*
+
 struct Product {
 	static int id;
 	string name;
@@ -13,19 +13,22 @@ struct Product {
 		id++;
 	}
 };
-*/
+
 
 // скидка от 0% до 100%
 	// если общая сумма заказов до 1000 ---> скидка 2%
 	// если общая сумма заказов от 1000 до 5000 то скидка 5%
 	// если общая сумма заказов от 5000 до 10000 то скидка 10%
-	// если общая сумма заказов от 10000 скидка 20%
+	// если общая сумма заказов от 10000 до 20000 и более скидка 20%
+	// спец скидка для VIP клиентов
+
 enum DiscountType {
-	No_diskont,
+	No_diskont=0,
 	Сustomer1000 = 2,
 	Сustomer5000 = 5,
 	Сustomer10000 = 10,
-	VIP_CUSTOMER = 20
+	Сustomer20000 = 20,
+	VIP_CUSTOMER = 30
 };
 
 class Customer
@@ -69,6 +72,11 @@ public:
 		tail = nullptr;
 		ptr = nullptr;
 		сustomerId++;
+		Basket* ptr_basket = new Basket;
+		ptr_basket->quantity = 0;
+		ptr_basket->next = nullptr;
+		ptr_basket->totalprice = 0;
+		ptr_basket->product = nullptr;
 		}
 
 	// Конструктор копирования
@@ -79,7 +87,11 @@ public:
 		phone{ other.phone },
 		discount{ other.discount},
 		money{ other.money},
-		all_price_order{ other.all_price_order }
+		all_price_order{ other.all_price_order},
+		head{ other.head },
+		tail{ other.tail },
+		ptr{ other.ptr }
+
 	{
 		сustomerId++;
 	}
@@ -104,7 +116,7 @@ public:
 	*/
 
 
-	~Customer() {}
+	~Customer();
 		
 
 	
@@ -128,13 +140,7 @@ public:
 	/// <returns></returns>
 	int getCustomerId(string name);
 	
-	/// <summary>
-	/// Получение id покупателя по email
-	/// </summary>
-	/// <returns></returns>
-	int getCustomerId(string email);
-		
-		
+
 	/// <summary>
 	/// Добавление товара в корзину (указываем наим. товара и кол-во) 
 	/// </summary>
@@ -170,7 +176,7 @@ public:
 	/// Удаление позиции из корзины
 	/// </summary>
 	/// <param name="delNode"></param>
-	void deleteBusket(Basket* delNode) {}
+	void deleteBusket(Basket* delNode);
 
 
 	/// <summary>
@@ -224,6 +230,9 @@ public:
 
 };
 
+// Устанавливаем значение счетчику = 0
+int Customer::сustomerId = 0;
+
 Customer::~Customer() {
 	Basket* current = head;
 	Basket* temp = nullptr;
@@ -252,7 +261,7 @@ Customer::Basket* Customer::initBasket(string p_name, int p_quantity) {
 
 	ptr ->product->name = p_name;
 	ptr->quantity = p_quantity;
-	ptr->totalprice = ptr->product->price * p_quantity * ;
+	ptr->totalprice = ptr->product->price * p_quantity;
 	return ptr;
 }
 
@@ -336,7 +345,9 @@ bool Customer::Byu() {
 			obj = obj->next;
 		}
 		// если подтверждено то уменьшаем кол-во денег у покупателя на сумму заказа
+		
 	}
+	return 1;
 }
 
 void Customer::displayCustomer() {
