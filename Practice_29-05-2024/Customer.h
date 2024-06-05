@@ -1,26 +1,25 @@
 #pragma once
 #include <iostream>
-//#include "\\Teacher\общая папка\БВ311\Tovar.h"
-
+/*
+#include "\\Teacher\общая папка\БВ311\Tovar.h"
+*/
 using namespace std;
 
 
 struct Product {
-	//static int id;
+	static int id;
 	string name="";
 	float price=0;
+	int quantity = 0;
 	Product() {
 	//	id++;
 	}
 	Product(string name, float price) : name{ name }, price{ price } {
 	//	id++;
 	}
-	Product(int id_product) {
-		//находим продукт по id
-	//	id++;
-	}
+	Product* GetProduct(int id_product);
+	Product* GetProduct(string name_product);
 };
-//int id = 0;
 
 
 // скидка от 0% до 100%
@@ -41,19 +40,18 @@ enum DiscountType {
 
 class Customer
 {
-private: int сustomerId;
 public:
-	struct Basket {	
+	struct Basket {
 		Product* product;
-		unsigned int quantity;
 		float totalprice;
+		int quantity;
 		Basket* next;
-	}	
+		
+	}
 	*head, 
 	*tail, 
 	*ptr;
-	
-	//static int count;
+	int id_Basket = 0;
 	string name;
 	string surname;
 	string email;
@@ -62,10 +60,6 @@ public:
 	float balance; //кол-во денег
 	
 	float all_price_order = 0; // сумма заказов покупателя (нужно для расчета скидки)
-	
-	
-	
-	
 	
 	// Конструктор 
 	Customer(string name, string surname, string email, string phone, float money) :
@@ -80,15 +74,14 @@ public:
 		head = nullptr;
 		tail = nullptr;
 		ptr = nullptr;
-		//count++;
-		//сustomerId=count;
+		
 		Basket* ptr_basket = new Basket;
 		ptr_basket->quantity = 0;
-		ptr_basket->next = nullptr;
 		ptr_basket->totalprice = 0;
 		ptr_basket->product = nullptr;
 		}
 
+	/*
 	// Конструктор копирования
 	Customer(const Customer& other): 
 		name{ other.name },
@@ -100,10 +93,8 @@ public:
 		all_price_order{ other.all_price_order}
 
 	{
-		//count++;
-		//сustomerId = count;
 	}
-
+	*/
 	//Конструктор переноса
 	/*Customer(const Customer&& other) {
 		name = other.name;
@@ -130,7 +121,6 @@ public:
 	
 	
 	// Геттеры
-	int getCustomerId() { return сustomerId;}
 	string getName() const {return name;}
 	string getSurname() const { return surname; }
 	string getEmail() const {return email;}
@@ -160,7 +150,7 @@ public:
 	/// <summary>
 	/// Инициализация позиции корзины наименованием товара и количетвом
 	/// </summary>
-	Basket* initBasket(string p_name, int p_quantity, float p_price);
+	Basket* initBasket(Product* product_obj, int quantity);
 
 	/// <summary>
 	/// Отображение позииции в корзине
@@ -182,10 +172,10 @@ public:
 
 	
 	/// <summary>
-	/// Удаление позиции из корзины
+	/// Удаление позиции из корзины (возвращает 0 - если не удалось удалить(позиция не найдена; 1 - произошло удаление)
 	/// </summary>
 	/// <param name="delNode"></param>
-	void deleteBusket(Basket* delNode);
+	bool deleteBusket(int id_Basket);
 
 
 	/// <summary>
@@ -239,7 +229,5 @@ public:
 
 };
 
-// Устанавливаем значение счетчику = 0
-//int Customer::count = 0;
 
 
