@@ -126,23 +126,23 @@ Customer::Basket* Customer::searchIdBasket(int id_Basket) {
 
 
 
-
+// Взаимодействие с кассиром
 bool Customer::Byu() {
-	Basket* obj = head;
-	if (head == nullptr) return 0;
-	else {
-		while (obj->next != nullptr) {
-			// передаем выбранные продукты продавцу
-			/*
-			obj->product->name;
-			obj->quantity
-			*/
-
-			obj = obj->next;
-		}
-		// если подтверждено то уменьшаем кол-во денег у покупателя на сумму заказа
-
-	}
+//	Basket* obj = head;
+//	if (head == nullptr) return 0;
+//	else {
+//		while (obj->next != nullptr) {
+//			 передаем выбранные продукты продавцу
+//			/*
+//			obj->product->name;
+//			obj->quantity
+//			*/
+//
+//			obj = obj->next;
+//		}
+//		 если подтверждено то уменьшаем баланс у покупателя на сумму заказа
+//
+//	}
 	return 1;
 }
 

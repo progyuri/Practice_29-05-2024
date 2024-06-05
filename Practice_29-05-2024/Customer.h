@@ -66,12 +66,12 @@ public:
 	float all_price_order = 0; // сумма заказов покупателя (нужно для расчета скидки)
 	
 	// Конструктор 
-	Customer(string name, string surname, string email, string phone, float money) :
+	Customer(string name, string surname, string email, string phone, float balance) :
 		name{ name },
 		surname{ surname },
 		email{ email },
 		phone{ phone },
-		balance (money)
+		balance (balance)
 		{
 		discount = No_diskont;
 		all_price_order = 0;
