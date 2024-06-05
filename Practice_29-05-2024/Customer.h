@@ -46,12 +46,16 @@ public:
 		float totalprice;
 		int quantity;
 		Basket* next;
-		
+		int idBasket = 0;
+		Basket() {
+			idBasket++;
+		}
 	}
 	*head, 
 	*tail, 
 	*ptr;
-	int id_Basket = 0;
+	int last_idBasket;
+	int idCount;
 	string name;
 	string surname;
 	string email;
@@ -74,11 +78,12 @@ public:
 		head = nullptr;
 		tail = nullptr;
 		ptr = nullptr;
-		
+		last_idBasket = 0;
 		Basket* ptr_basket = new Basket;
 		ptr_basket->quantity = 0;
 		ptr_basket->totalprice = 0;
 		ptr_basket->product = nullptr;
+		ptr_basket->idBasket = last_idBasket;
 		}
 
 	/*
@@ -134,21 +139,14 @@ public:
 	
 
 	/// <summary>
-	/// Получение id покупателя по имени
-	/// </summary>
-	/// <returns></returns>
-	//int getCustomerId(string name);
-	
-
-	/// <summary>
-	/// Добавление товара в корзину (указываем наим. товара и кол-во) 
+	/// Добавление позиции в корзину (указываем указатель) 
 	/// </summary>
 	/// <param name="id_product">id наименования</param>
 	/// <param name="quantity">кол-во товаров</param>
 	void AddToBasket(Basket*);
 
 	/// <summary>
-	/// Инициализация позиции корзины наименованием товара и количетвом
+	/// Инициализация позиции корзины указателем на товар и количетвом
 	/// </summary>
 	Basket* initBasket(Product* product_obj, int quantity);
 
@@ -164,32 +162,26 @@ public:
 	void displayBasket();
 
 	/// <summary>
-	/// Поиск позиции в корзине по имени
+	/// Поиск позиции в корзине по id
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	Basket* searchBasketName(string);
-
+	Basket* searchIdBasket(int id);
+	
 	
 	/// <summary>
-	/// Удаление позиции из корзины (возвращает 0 - если не удалось удалить(позиция не найдена; 1 - произошло удаление)
+	/// Удаление позиции из корзины, возвращает 0 - если не удалось удалить(позиция не найдена); 1 - произошло удаление
 	/// </summary>
 	/// <param name="delNode"></param>
-	bool deleteBusket(int id_Basket);
+	bool RemovePos_FromBasket(Basket*);
 
 
 	/// <summary>
 	/// Редактирование выбранной позиции в корзине
 	/// </summary>
 	/// <param name="index"></param>
-	void EditBasket(int index, int id_product, int quantity);
-	/// <summary>
-	/// Удаление из корзины позиции
-	/// </summary>
-	/// <param name="id_product"></param>
-	/// <param name="quantity"></param>
-	void RemoveFromBasket(int index);
-
+	bool EditBasket(int idBasket, Product*, int quantity);
+	
 	/// <summary>
 	/// Удаление из корзины всех позиций
 	/// </summary>
@@ -197,12 +189,7 @@ public:
 	void RemoveAllFromBasket(int index);
 
 	/// <summary>
-	/// Показ выбранной позиции в корзине
-	/// </summary>
-	void ShowCart(int index);
-	
-	/// <summary>
-	/// Вычисление общей суммы заказа
+	/// Вычисление общей суммы заказа (возвращает общую сумму заказа, параметр total_dis - сумма с учетом скидки)
 	/// </summary>
 	/// <returns></returns>
 	float AllBasket_Price(float& total_dis);
@@ -226,6 +213,12 @@ public:
 	/// Отображение покупателя
 	/// </summary>
 	void displayCustomer();
+
+	/// <summary>
+	/// Получение всей корзины, передаем ссылку на первую позицию
+	/// </summary>
+	/// <returns></returns>
+	Basket* GetBusket();
 
 };
 
