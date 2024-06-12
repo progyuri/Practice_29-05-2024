@@ -10,11 +10,14 @@ struct Product {
 	string name="";
 	float price=0;
 	int quantity = 0;
+	int lastid = 0;
 	Product() {
 		id++;
+		lastid = id;
 	}
 	Product(string name, float price) : name{ name }, price{ price } {
 	//	id++;
+	//  lastid = id;
 	}
 	Product* GetProduct(int id_product);
 	Product* GetProduct(string name_product);
