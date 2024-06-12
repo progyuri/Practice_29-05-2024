@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Customer.h"
+#include <sstream>
 
 Customer::~Customer() {
 	Basket* current = head;
@@ -119,28 +120,35 @@ void Customer::RemoveAllFromBasket() {
 
 
 //Отображение позиции в корзине
-void Customer::displayBasketNode(Basket* dispNode) {
-	if (dispNode != nullptr)
-		cout << "\033[0m" << "BasketId: " << "\033[1;31m" << dispNode->idBasket
+string Customer::displayBasketNode(Basket* dispNode) {
+	
+	if (dispNode != nullptr) {
+		stringstream ss;
+		ss << "\033[0m" << "BasketId: " << "\033[1;31m" << dispNode->idBasket
 		<< "\033[0m" <<"; name product: " << "\033[1;31m" << dispNode->product->name
 		<< "\033[0m" <<"; price :" << "\033[1;31m" << dispNode->product->price
 //		<< "\033[0m" << "; quantity: " << "\033[1;31m" << dispNode->quantity 
 		<< "\033[0m" << "; quantity: " << "\033[1;31m" << dispNode->product->quantity 
 //		<< "\033[0m" << "; total price: " << "\033[1;31m" << dispNode->totalprice 
 		<< "\033[0m" << endl;
+		return ss.str();
+	}
 }
 
 //Отображение всех позиций в корзине и итоговых значений по корзиине
-void Customer::displayBasket() {
+string Customer::displayBasket() {
 	Basket* temp = head;
 	float total_dis = 0;
-	cout << "\033[1;33mBasket: \033[0m";
+	string s_totalBasket;
+	stringstream ss;
+	ss << "\033[1;33mBasket: \033[0m";
 	while (temp != nullptr) {
-		displayBasketNode(temp);
+		s_totalBasket+= " "+ displayBasketNode(temp);
 		temp = temp->next;
 	}
-//	cout <<"\033[1;33mBusket total:\033[0m" << "\033[1;31m" << AllBasket_Price(total_dis) << "\033[0m" << "  " 
+//	ss <<"\033[1;33mBusket total:\033[0m" << "\033[1;31m" << AllBasket_Price(total_dis) << "\033[0m" << "  " 
 //		 << "\033[1;33mwith diskount:\033[0m" << "\033[1;31m" << total_dis << "\033[0m" << endl;
+//	s_totalBasket+=" " + ss.str()
 }
 
 Basket* Customer::searchIdBasket(int id_Basket) {
@@ -174,14 +182,16 @@ bool Customer::Byu() {
 	return 1;
 }
 
-void Customer::displayCustomer() {
-	cout << "Display Customer : " << endl;
-	cout << "Name: " << name << endl;
-	cout << "Surname: " << surname << endl;
-	cout << "Email: " << email << endl;
-	cout << "Phone: " << phone << endl;
-	cout << "Balance: " << balance << endl;
-	cout << "Discount: " << discount << "%" << endl;
+string Customer::displayCustomer() {
+	stringstream ss;
+	ss << "Display Customer : " << endl;
+	ss << "Name: " << name << endl;
+	ss << "Surname: " << surname << endl;
+	ss << "Email: " << email << endl;
+	ss << "Phone: " << phone << endl;
+	ss << "Balance: " << balance << endl;
+	ss << "Discount: " << discount << "%" << endl;
+	return ss.str();
 }
 
 

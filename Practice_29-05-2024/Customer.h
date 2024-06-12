@@ -140,12 +140,12 @@ public:
 	/// Отображение позииции в корзине
 	/// </summary>
 	/// <param name="delNode"></param>
-	void displayBasketNode(Basket* dispNode);
+	string displayBasketNode(Basket* dispNode);
 	
 	/// <summary>
 	/// Отображение всех позиций корзины
 	/// </summary>
-	void displayBasket();
+	string displayBasket();
 
 	/// <summary>
 	/// Поиск позиции в корзине по id
@@ -200,7 +200,7 @@ public:
 	/// <summary>
 	/// Отображение покупателя
 	/// </summary>
-	void displayCustomer();
+	string displayCustomer();
 
 	/// <summary>
 	/// Получение всей корзины, передаем пока ссылку на первую позицию
