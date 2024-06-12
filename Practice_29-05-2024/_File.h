@@ -26,6 +26,6 @@ public:
 	string name = "";
 
 	void Open(string path, string namefile, char* type_of_access, Product*& products);
-	void Save(string path, string namefile, char* type_of_access, Product*& products);
+	void Save(string path, string namefile, char* type_of_access, Product* products);
 };
 

@@ -20,3 +20,15 @@ void _File::Open(string path, string namefile, char* type_of_access, Product*& p
 	}
 }
 
+void _File::Save(string path, string namefile, char* type_of_access, Product* products) {
+	FILE* outfile;
+	fopen_s(&outfile, (path + namefile).c_str(), type_of_access);
+
+	if (outfile) {
+		for (int i = 0; i < products->id; i++) {
+			fprintf(outfile, "%s %f %d\n", products[i].name.c_str(), products[i].price, products[i].quantity);
+		}
+
+		fclose(outfile);
+	}
+}
