@@ -189,3 +189,9 @@ void Customer::displayCustomer() {
 Basket* Customer::GetBusket() {
 	return head;
 }
+
+// Получение информации о ден. средствах на балансе для совершения покупки
+// если есть деньги, то передаем полную сумму, если нет, то доступное кол-во средств
+float Customer::GetCash(float cash) {
+	return (cash > balance) ?  balance : cash;
+}

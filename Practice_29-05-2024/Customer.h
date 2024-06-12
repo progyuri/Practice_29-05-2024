@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
-#include "\\Teacher\общая папка\БВ311\Tovar.h"
+//#include "\\Teacher\общая папка\БВ311\Tovar.h"
 
 using namespace std;
 
-/*
+
 struct Product {
 	static int id;
 	string name="";
@@ -19,7 +19,7 @@ struct Product {
 	Product* GetProduct(int id_product);
 	Product* GetProduct(string name_product);
 };
-*/
+
 
 // скидка от 0% до 100%
 	// если общая сумма заказов до 1000 ---> скидка 2%
@@ -117,6 +117,8 @@ public:
 	string getSurname() const { return surname; }
 	string getEmail() const {return email;}
 	string getPhone() const { return phone; }
+
+	float getBalance() const { return balance; }
 	
 	// Сеттеры
 	void setName(string newName) {name = newName;}
@@ -203,6 +205,12 @@ public:
 	/// <returns></returns>
 	Basket* GetBusket();
 
+	/// <summary>
+	/// Проверка хватает ли у покупателя на балансе ден. средств для оплаты покупки  если не хватает, то возвращается полный баланс
+	/// </summary>
+	/// <param name="cash"></param>
+	/// <returns></returns>
+	float GetCash(float cash);
 };
 
 
